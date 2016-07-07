@@ -1,4 +1,5 @@
 library(shiny)
+library(shinydashboard)
 
 shinyUI(tagList(
   tags$head(
@@ -13,6 +14,7 @@ shinyUI(tagList(
         width: 960px;
         height: 700px;
       }")),
-  progressInit(),
-  uiOutput("main")
+  dashboardPage(dashboardHeader(title="maintaineR"),
+                dashboardSidebar(sidebarMenu(id="menu", sidebarMenuOutput("sidebar"))),
+                dashboardBody(uiOutput("body")))
 ))

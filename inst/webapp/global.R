@@ -2,12 +2,10 @@ library(data.table)
 library(igraph)
 library(timeline)
 library(maintaineR)
-library(shinyIncubator)
-library(scales)
 library(ggplot2)
 
 if (!exists("datadir")) {
-  datadir <- "../cran-data"
+  datadir <- "/data/rdata"
 }
 
 if (!file.exists(datadir)) {
@@ -25,24 +23,17 @@ config <- as.list(read.dcf(config)[1, ])
 config$Update <- as.logical(config$Update)
 config$AllowDownload <- as.logical(config$AllowDownload)
 
-DownloadDataFile("rds/packages.rds", datadir, config$RootURL, !config$Update)
-DownloadDataFile("rds/deps.rds", datadir, config$RootURL, !config$Update)
-DownloadDataFile("clones.rds", datadir, config$RootURL, !config$Update)
-DownloadDataFile("conflicts.rds", datadir, config$RootURL, !config$Update)
+core.packages <- c("R", "base", "compiler", "datasets", "graphics",
+                   "grDevices", "grid", "methods", "parallel", "profile",
+                   "splines", "stats", "stats4", "tcltk", "tools",
+                   "translations", "utils")
 
-cran <- ReadCRANData(datadir)
-
-cran$deps.all <- {
-  packages <- cran$packages[, list(package, version)]
-  deps <- merge(packages, cran$deps)
-  deps <- deps[deps$dependency %in% packages$package, ]
-  DependencyGraph(deps, packages)
-}
-
-PackageFullName <- function(p) {
-  paste(p["package"], p["version"], sep="_")
-}
-
-PackageLink <- function(p) {
-  sprintf("?p=%s&v=%s", p["package"], p["version"])
-}
+index <- readRDS(file.path(datadir, "rds/index.rds"))
+packages <- readRDS(file.path(datadir, "rds/packages.rds"))
+descfiles <- readRDS(file.path(datadir, "rds/descfiles.rds"))
+dependencies <- readRDS(file.path(datadir, "rds/deps.rds"))
+dependencies <- dependencies[type.name %in% c("depends", "imports", "linkingto")]
+namespaces <- readRDS(file.path(datadir, "rds/namespaces.rds"))
+clones <- merge(readRDS(file.path(datadir, "rds/clones.rds")), packages,
+                by=c("source", "repository", "ref"))
+clones <- clones[, if (length(unique(Package)) > 1) .SD, by="body.hash"]
