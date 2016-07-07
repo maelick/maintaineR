@@ -8,11 +8,13 @@
 }
 
 \usage{
-PackageHistory(p, packages, range=c(as.Date("0-1-1"), Sys.Date()))
+PackageHistory(p, packages, index, src=NULL, range=c(as.Date("0-1-1"), Sys.Date()))
 }
 \arguments{
   \item{p}{Package name.}
-  \item{packages}{CRAN data.}
+  \item{packages}{Packages}
+  \item{index}{Index}
+  \item{src}{Source to consider}
   \item{range}{A Date vector of length 2 containing date range to use
     for the history.}
 }

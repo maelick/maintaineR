@@ -10,7 +10,7 @@
 
 \usage{
 DependencyGraph(deps, state, types=c("depends", "imports", "linkingto"))
-Dependencies(graph, nodes, type="out", min.dist=0, max.dist=Inf)
+Dependencies(graph, nodes, type="out", min.dist=1, max.dist=Inf)
 GraphSubset(graph, nodes, type)
 }
 \arguments{
@@ -21,10 +21,10 @@ GraphSubset(graph, nodes, type)
   \item{nodes}{A character vector containing package name}
   \item{type}{Direcotion of the dependency ("out" for dependency and
     "in" for reverse dependency).}
-  \item{min.dist}{Only packages with a greater or equal distance to one
-    of the nodes will be considerd.}
-  \item{max.dist}{Only packages with a strictly smaller distance to one
-    of the nodes will be considerd.}
+  \item{min.dist}{Only packages with a distance greater or to this
+    number of nodes will be considerd.}
+  \item{max.dist}{Only packages with a distance strictly smaller to this
+    number of nodes will be considerd.}
 }
 \value{
   \code{DependencyGraph} returns the dependency graph for a given state

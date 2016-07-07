@@ -9,10 +9,11 @@
 }
 
 \usage{
-State(packages, date)
+State(index, date=NULL)
 Date(packages, p=NULL, v=NULL, d=NULL)
 }
 \arguments{
+  \item{index}{Package index}
   \item{packages}{Dataframe of all packages}
   \item{date}{Date to consider for CRAN snapshot}
   \item{d}{Date to consider for CRAN snapshot}
