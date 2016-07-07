@@ -8,6 +8,6 @@ Maintainer: Maëlick Claes <himself@maelick.net>
 Description: maintaineR contains functions to analyse CRAN packages
              depencies, conflicts and clones.
 Depends: data.table, igraph
-Imports: rCharts, d3Network, RCurl
+Imports: rCharts, RCurl
 License: GPL-3
 Encoding: UTF-8
